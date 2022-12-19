@@ -1,0 +1,45 @@
+#define _CRT_SECURE_NO_DEPRECATE
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <math.h>
+#define N 50
+
+typedef double (*TFun) (double);
+double func(double x);
+double* calculate(TFun ptrf, double* x, int n);
+
+
+int main() {
+	double array[N];
+	double array1[10];
+	double* arr = array1;
+
+	for (int i = 0; i < N; i++) {
+		array[i] = ((rand() % 21)-10) + (((rand() % 9)+1.) / 10);
+	}
+
+	for (int i = 0; i < N; i++) {
+		printf("%.2lf\n", array[i]);
+	}
+
+	printf("\n");
+	arr = calculate(func, array, 10);
+
+	for (int i = 0; i < 10; i++) {
+		printf("%.2lf\n", arr[i]);
+	}
+}
+
+double* calculate(TFun ptrf, double* x, int n) {
+	double* array1 = (double*)malloc(10 * sizeof(double));;
+	for (int i = 0; i < 10; i++) {
+		array1[i] = fabs(ptrf(x[i]));
+		
+	}
+	return array1;
+}
+
+double func(double x) {
+	return (x + cos(x) + 1);
+}
